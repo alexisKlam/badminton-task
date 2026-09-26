@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <title>Tableau de tâches</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="home" hidden>
+    <form id="create-form" class="home-card">
+      <h1>Nouveau tableau de tâches</h1>
+      <p>Pas de compte : chaque tableau a son adresse. Toute personne qui a le lien peut voir et modifier les tâches.</p>
+      <label>Nom du tableau
+        <input name="name" required placeholder="Ex : Tournoi de printemps">
+      </label>
+      <div class="field">
+        <span>Emoji</span>
+        <div id="emoji-picker" class="emoji-picker"></div>
+      </div>
+      <div class="field">
+        <span>Personnes</span>
+        <div id="create-people"></div>
+      </div>
+      <button type="submit" class="primary big">Créer le tableau</button>
+    </form>
+  </section>
+
+  <section id="not-found" hidden>
+    <div class="home-card">
+      <h1>Tableau introuvable</h1>
+      <p>Vérifie le lien reçu.</p>
+      <a href="#" class="primary big button-link">Créer un nouveau tableau</a>
+    </div>
+  </section>
+
+  <section id="admin" hidden>
+    <header class="topbar">
+      <h1>🏸 Admin : tous les tableaux</h1>
+    </header>
+    <main class="admin-body">
+      <p id="admin-status"></p>
+      <button id="admin-signin" class="primary" hidden>Se connecter avec Google</button>
+      <ul id="admin-list" class="admin-list"></ul>
+    </main>
+  </section>
+
+  <section id="board" hidden>
+    <header class="topbar">
+      <h1 id="board-name"></h1>
+      <select id="filter" aria-label="Filtrer par personne"></select>
+      <button id="edit-people" class="ghost" aria-label="Modifier les personnes">👥</button>
+      <button id="share" class="ghost" aria-label="Partager le lien">🔗</button>
+    </header>
+    <nav id="tabs" class="tabs"></nav>
+    <main id="columns" class="columns"></main>
+    <button id="add" class="fab" aria-label="Nouvelle tâche">+</button>
+  </section>
+
+  <dialog id="people-dialog">
+    <form id="people-form" method="dialog">
+      <div class="sheet-header">
+        <button type="button" id="people-close" class="ghost">✕</button>
+        <strong>Personnes</strong>
+        <button type="submit" class="primary">Enregistrer</button>
+      </div>
+      <div class="sheet-body">
+        <div id="edit-people-list"></div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="editor">
+    <form id="task-form" method="dialog">
+      <div class="sheet-header">
+        <button type="button" id="close" class="ghost">✕</button>
+        <strong id="editor-title">Tâche</strong>
+        <button type="submit" class="primary">Enregistrer</button>
+      </div>
+      <div class="sheet-body">
+        <label>Titre
+          <input name="title" required maxlength="200" placeholder="Ex : Réserver le gymnase">
+        </label>
+        <div class="field">
+          <span>Statut</span>
+          <div id="status-picker" class="segmented"></div>
+        </div>
+        <div class="row">
+          <label>Assigné à
+            <select name="assignee"></select>
+          </label>
+          <label>Échéance
+            <input name="dueDate" type="date">
+          </label>
+        </div>
+        <label>Description
+          <textarea name="description" rows="4" placeholder="Détails…"></textarea>
+        </label>
+        <div class="field">
+          <span>Checklist</span>
+          <ul id="checklist" class="checklist"></ul>
+          <div class="add-item">
+            <input id="new-item" placeholder="Ajouter un élément" enterkeyhint="done">
+            <button type="button" id="add-item" class="ghost">Ajouter</button>
+          </div>
+        </div>
+        <button type="button" id="delete" class="danger">Supprimer la tâche</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

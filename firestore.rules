@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// No accounts for users: whoever knows a board URL can read and edit it.
+// Board ids are random. Only the admin (Google sign-in) can list boards.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'alexis.k@bcv38.org'
+        && request.auth.token.email_verified;
+    }
+
+    function validPeople(people) {
+      return people is list && people.size() <= 30;
+    }
+
+    match /boards/{boardId} {
+      allow get: if true;
+      allow list: if isAdmin();
+      allow create: if request.resource.data.keys().hasOnly(['name', 'emoji', 'people', 'lastActivityAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 60
+        && request.resource.data.emoji is string
+        && request.resource.data.emoji.size() <= 16
+        && validPeople(request.resource.data.people);
+      // Name and emoji are fixed at creation.
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['people', 'lastActivityAt'])
+        && validPeople(request.resource.data.people);
+
+      match /tasks/{taskId} {
+        allow read, delete: if true;
+        allow create, update: if request.resource.data.title is string
+          && request.resource.data.title.size() > 0
+          && request.resource.data.title.size() <= 200
+          && request.resource.data.status in ['todo', 'doing', 'done'];
+      }
+    }
+  }
+}
