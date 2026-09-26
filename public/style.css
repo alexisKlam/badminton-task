@@ -190,6 +190,8 @@ button {
 .admin-list { list-style: none; padding: 0; }
 .admin-list li { background: var(--surface); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; }
 .admin-list a { font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+.admin-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.admin-delete { color: var(--danger); border: 1px solid var(--danger); padding: 6px 12px; font-size: 0.85rem; flex-shrink: 0; }
 .admin-meta { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
 .admin-titles { font-size: 0.9rem; margin-top: 6px; }
 

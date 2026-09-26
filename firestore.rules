@@ -16,7 +16,7 @@ service cloud.firestore {
 
     match /boards/{boardId} {
       allow get: if true;
-      allow list: if isAdmin();
+      allow list, delete: if isAdmin();
       allow create: if request.resource.data.keys().hasOnly(['name', 'emoji', 'people', 'lastActivityAt'])
         && request.resource.data.name is string
         && request.resource.data.name.size() > 0
