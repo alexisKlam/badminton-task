@@ -1,5 +1,5 @@
 import {
-  STATUSES, EMOJIS, MAX_NAME_LENGTH, BOARD_ID_LENGTH, BOARD_ID_ALPHABET, ADMIN_ROUTE, TOAST_MS,
+  STATUSES, EMOJIS, MAX_NAME_LENGTH, DOMAIN_BOARDS, BOARD_ID_LENGTH, BOARD_ID_ALPHABET, ADMIN_ROUTE, TOAST_MS,
 } from "./config.js";
 import { db, firestore } from "./firebase.js";
 import { enableDrag } from "./drag.js";
@@ -120,7 +120,7 @@ function openBoard() {
 }
 
 function route() {
-  const hash = location.hash.slice(1);
+  const hash = location.hash.slice(1) || (DOMAIN_BOARDS[location.hostname] ?? "");
   unsubscribers.forEach((stop) => stop());
   unsubscribers = [];
   board = null;

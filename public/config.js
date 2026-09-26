@@ -20,6 +20,11 @@ export const EMOJIS = ["🏸", "🏆", "🎉", "📅", "🛠️", "💰", "📣"
 export const MAX_PEOPLE = 30;
 export const MAX_NAME_LENGTH = 60;
 
+// Custom domains that open a given board when the URL has no hash.
+export const DOMAIN_BOARDS = {
+  "task.bcv38.org": "phzp2dwrz6",
+};
+
 export const BOARD_ID_LENGTH = 10;
 export const BOARD_ID_ALPHABET = "abcdefghijkmnpqrstuvwxyz23456789";
 
